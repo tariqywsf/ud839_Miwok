@@ -65,10 +65,4 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_play_arrow" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackground"/>
-
 </RelativeLayout>
