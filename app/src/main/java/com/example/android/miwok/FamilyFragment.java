@@ -1,33 +1,24 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.android.miwok;
+
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NumbersActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FamilyFragment extends Fragment {
 
     /**
      * Handles playback of all the sound files
@@ -67,6 +58,7 @@ public class NumbersActivity extends AppCompatActivity {
             }
         }
     };
+
     /**
      * This listener gets triggered when the {@link MediaPlayer} has completed
      * playing the audio file.
@@ -79,39 +71,59 @@ public class NumbersActivity extends AppCompatActivity {
         }
     };
 
+
+    public FamilyFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+       int int1;
+       View rootView = inflater.inflate(R.layout.word_list,container,false);
+
+        /** TODO: Insert all the code from the NumberActivity’s onCreate() method after the setContentView method call */
 
         // Create and setup the {@link AudioManager} to request audio focus
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
-        // Create a list of words 
+        // Create a list of words
         final ArrayList<Word> words = new ArrayList<Word>();
-        words.add(new Word("one", "lutti", R.drawable.number_one, R.raw.number_one));
-        words.add(new Word("two", "otiiko", R.drawable.number_two, R.raw.number_two));
-        words.add(new Word("three", "tolookosu", R.drawable.number_three, R.raw.number_three));
-        words.add(new Word("four", "oyyisa", R.drawable.number_four, R.raw.number_four));
-        words.add(new Word("five", "massokka", R.drawable.number_five, R.raw.number_five));
-        words.add(new Word("six", "temmokka", R.drawable.number_six, R.raw.number_six));
-        words.add(new Word("seven", "kenekaku", R.drawable.number_seven, R.raw.number_seven));
-        words.add(new Word("eight", "kawinta", R.drawable.number_eight, R.raw.number_eight));
-        words.add(new Word("nine", "wo’e", R.drawable.number_nine, R.raw.number_nine));
-        words.add(new Word("ten", "na’aacha", R.drawable.number_ten, R.raw.number_ten));
+        words.add(new Word(R.string.family_father, R.string.miwok_family_father,
+                R.drawable.family_father, R.raw.family_father));
+        words.add(new Word(R.string.family_mother, R.string.miwok_family_mother,
+                R.drawable.family_mother, R.raw.family_mother));
+        words.add(new Word(R.string.family_son, R.string.miwok_family_son,
+                R.drawable.family_son, R.raw.family_son));
+        words.add(new Word(R.string.family_daughter, R.string.miwok_family_daughter,
+                R.drawable.family_daughter, R.raw.family_daughter));
+        words.add(new Word(R.string.family_older_brother, R.string.miwok_family_older_brother,
+                R.drawable.family_older_brother, R.raw.family_older_brother));
+        words.add(new Word(R.string.family_younger_brother, R.string.miwok_family_younger_brother,
+                R.drawable.family_younger_brother, R.raw.family_younger_brother));
+        words.add(new Word(R.string.family_older_sister, R.string.miwok_family_older_sister,
+                R.drawable.family_older_sister, R.raw.family_older_sister));
+        words.add(new Word(R.string.family_younger_sister, R.string.miwok_family_younger_sister,
+                R.drawable.family_younger_sister, R.raw.family_younger_sister));
+        words.add(new Word(R.string.family_grandmother, R.string.miwok_family_grandmother,
+                R.drawable.family_grandmother, R.raw.family_grandmother));
+        words.add(new Word(R.string.family_grandfather, R.string.miwok_family_grandfather,
+                R.drawable.family_grandfather, R.raw.family_grandfather));
 
-        // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The 
-        // adapter knows how to create list items for each item in the list. 
-        WordAdapter adapter = new WordAdapter(this, words, R.color.category_numbers);
+        // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
+        // adapter knows how to create list items for each item in the list.
+        WordAdapter adapter = new WordAdapter(getActivity(), words, R.color.category_family);
 
-        // Find the {@link ListView} object in the view hierarchy of the {@link Activity}. 
-        // There should be a {@link ListView} with the view ID called list, which is declared in the 
-        // word_list.xml layout file. 
-        ListView listView = (ListView) findViewById(R.id.list);
+        // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
+        // There should be a {@link ListView} with the view ID called list, which is declared in the
+        // word_list.xml layout file.
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
 
-        // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the 
-        // {@link ListView} will display list items for each {@link Word} in the list. 
+        // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
+        // {@link ListView} will display list items for each {@link Word} in the list.
         listView.setAdapter(adapter);
+
 
         // Set a click listener to play the audio when the list item is clicked on
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,11 +132,9 @@ public class NumbersActivity extends AppCompatActivity {
                 // Release the media player if it currently exists because we are about to
                 // play a different sound file
                 releaseMediaPlayer();
+
                 // Get the {@link Word} object at the given position the user clicked on
                 Word word = words.get(position);
-
-                Log.v("NumbersActivity", "Current word: " + word);
-                //same as Log.v("NumbersActivity", "Current word: " + word.toString());
 
                 // Request audio focus for playback
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
@@ -139,7 +149,7 @@ public class NumbersActivity extends AppCompatActivity {
 
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with the current word
-                    mMediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getAudioResourceId());
+                    mMediaPlayer = MediaPlayer.create(getActivity(), word.getAudioResourceId());
 
                     // Start the audio file
                     mMediaPlayer.start();
@@ -150,10 +160,11 @@ public class NumbersActivity extends AppCompatActivity {
                 }
             }
         });
+       return rootView;
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         // When the activity is stopped, release the media player resources because we won't
         // be playing any more sounds.
